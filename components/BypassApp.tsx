@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import {
   ArrowLeftRight, Check, ChevronDown, Clock3, Copy, ExternalLink,
-  History, Layers3, Link2, Loader2, Moon, Route, ShieldCheck, Sun, Trash2, Zap
+  History, Layers3, Link2, Loader2, Moon, Route, Sun, Trash2, Zap
 } from "lucide-react";
 
 type Result = {
@@ -134,7 +135,9 @@ export default function BypassApp() {
     <main className="shell">
       <header className="topbar">
         <div className="brand">
-          <div className="brand-mark"><ShieldCheck size={27} strokeWidth={2.5} /></div>
+          <div className="brand-mark">
+            <Image src="/brand-logo.png" alt="HIDZ BYPASS" width={50} height={50} priority />
+          </div>
           <div>
             <strong>HIDZ BYPASS</strong>
             <span>RESOLVER TAUTAN</span>
@@ -301,4 +304,3 @@ export default function BypassApp() {
     </main>
   );
 }
-
