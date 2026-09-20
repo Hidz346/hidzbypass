@@ -105,7 +105,12 @@ async function assertPublicUrl(raw: string) {
     return url;
   }
 
-  const records = await dns.lookup(host, { all: true, verbatim: true });
+  let records;
+  try {
+    records = await dns.lookup(host, { all: true, verbatim: true });
+  } catch {
+    throw new Error("Host tidak ditemukan atau tidak valid.");
+  }
   if (!records.length) throw new Error("Host tidak dapat diverifikasi.");
 
   for (const record of records) {
