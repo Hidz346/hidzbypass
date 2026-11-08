@@ -1,50 +1,22 @@
 import type { Metadata } from "next";
-import { Orbitron, Space_Grotesk, Boogaloo } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const orbitron = Orbitron({
-  subsets: ["latin"],
-  weight: ["600", "700", "800", "900"],
-  variable: "--font-display"
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-body"
-});
-
-const boogaloo = Boogaloo({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-tag"
-});
+const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-body" });
+const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
   title: "HIDZ BYPASS — Resolver Tautan Publik",
-  description: "Telusuri rantai pengalihan dari tautan pendek atau wrapper apa pun, lalu temukan URL tujuan sebenarnya tanpa menyimpan riwayat di server.",
+  description: "Telusuri rantai pengalihan dari tautan pendek atau wrapper apa pun secara instan.",
   robots: { index: false, follow: false }
 };
 
-// Terapkan tema tersimpan sebelum hydration agar tidak ada kedipan warna
-// saat halaman pertama kali dimuat (light/dark flash).
-const THEME_INIT_SCRIPT = `
-(function () {
-  try {
-    var saved = window.localStorage.getItem("hidz-theme");
-    if (saved === "dark" || saved === "light") {
-      document.documentElement.dataset.theme = saved;
-    }
-  } catch (err) {}
-})();
-`;
+const THEME_INIT = `(function(){try{var s=localStorage.getItem("hidz-theme");document.documentElement.dataset.theme=(s==="dark"||s==="light")?s:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");}catch(e){}})();`;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="id" className={`${orbitron.variable} ${spaceGrotesk.variable} ${boogaloo.variable}`}>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
-      </head>
+    <html lang="id" suppressHydrationWarning className={`${inter.variable} ${mono.variable}`}>
+      <head><script dangerouslySetInnerHTML={{ __html: THEME_INIT }} /></head>
       <body>{children}</body>
     </html>
   );
